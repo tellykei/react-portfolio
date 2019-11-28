@@ -4,9 +4,13 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 
 import{blue, purple} from "@material-ui/core/colors";
-import HomePage from '../../../../assign2/assignmenttwo/bookface/src/components/HomePage';
+import HomePage from './Pages/HomePage';
 import ResumePage from './Pages/ResumePage';
 import PortfolioPage from './Pages/PortfoliPage';
+import ContactPage from './Pages/ContactPage';
+import SignUp from './Pages/SignUp';
+import NaviBar from './Navi/NaviBar';
+import SignInPage from './Pages/SignInPage';
 const theme = createMuiTheme({
   palette:{
     primary:blue,
@@ -41,7 +45,7 @@ class App extends React.Component {
                   <SignUp/>
                 </Route>
                 <Route path = "/contact">
-                  <ContactMe/>
+                  <ContactPage/>
                 </Route>
               </Switch>
             </div>

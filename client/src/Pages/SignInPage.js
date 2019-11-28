@@ -106,9 +106,6 @@ class SignInPage extends React.Component {
                   </Link>
                 </Grid>
               </Grid>
-              <Box mt={5}>
-                <Copyright />
-              </Box>
             </form>
           </div>
         </Grid>

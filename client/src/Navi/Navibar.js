@@ -9,11 +9,11 @@ import { withRouter } from "react-router-dom";
 class NaviBar extends React.Component {
     constructor(props){
         super(props);
-        this.handleHomePage = this.handleHomePage.bind
-        this.handleResumePageNavi = this.handleResumePageNavi.bind
-        this.handleProjectPageNavi = this.handleProjectPageNavi.bind
-        this.handleSignInPageNavi = this.handleSignInPageNavi.bind
-        this.handleContactPageNavi = this.handleContactPageNavi.bind
+        this.handleHomePageNavi = this.handleHomePageNavi.bind(this);
+        this.handleResumePageNavi = this.handleResumePageNavi.bind(this);
+        this.handleProjectPageNavi = this.handleProjectPageNavi.bind(this);
+        this.handleSignInPageNavi = this.handleSignInPageNavi.bind(this);
+        this.handleContactPageNavi = this.handleContactPageNavi.bind(this);
     }
     handleHomePageNavi(){
         const {history} = this.props;

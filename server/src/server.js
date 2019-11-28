@@ -2,7 +2,7 @@ const Express = require('express');
 const Mongoose = require('mongoose')
 
 const User = require('./model/user')
-
+const app = Express();
 Mongoose.connect('mongodb://localhost/test',{useNewUrlParser:true});
 
 Mongoose.connection.once('open', ()=> console.log("Connected to database!"));
