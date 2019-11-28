@@ -3,20 +3,29 @@ const Mongoose = require('mongoose')
 
 const User = require('./model/user')
 const app = Express();
-Mongoose.connect('mongodb://localhost/test',{useNewUrlParser:true});
+Mongoose.connect('mongodb://localhost/newtest',{useNewUrlParser:true});
 
 Mongoose.connection.once('open', ()=> console.log("Connected to database!"));
 
 app.use(Express.json());
-app.get('./api/users', async (request, response)=> {
+
+app.get('/api/users', async (request, response) => {
+
+    console.log('A GET request came in asking for all users');
+
+    const users = await User.find({});
+
+    return response.send(users).status(200);
+});
+app.post('/api/users', async (request, response) => {
 
     console.log('A request came in with the body: ' + JSON.stringify(request.body));
 
-    const { name, email,password } = request.body;
+    const { name, emailAddress, password } = request.body;
 
     try {
 
-        await User.create({ name: name, email: email, password: password});
+        await User.create({ name: name, emailAddress: emailAddress, password: password});
 
         console.log(`A new user was created with name: '${name}' and email address: '${emailAddress}'`);
 
@@ -29,6 +38,7 @@ app.get('./api/users', async (request, response)=> {
         return response.sendStatus(400);
     }
 });
+
 
 const port = 4000;
 app.listen(port, () => console.log(`Server has started on localhost:${port}`))

@@ -17,7 +17,9 @@ const userSchema = new Mongoose.Schema({
     },
     password:{
         type:String,
-        rquired:true,
+        unique:false,
+        required:true,
+        trim: false
     }
 });
 

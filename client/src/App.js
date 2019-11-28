@@ -7,7 +7,7 @@ import{blue, purple} from "@material-ui/core/colors";
 import HomePage from './Pages/HomePage';
 import ResumePage from './Pages/ResumePage';
 import PortfolioPage from './Pages/PortfoliPage';
-import ContactPage from './Pages/ContactPage';
+import FeedbackPage from './Pages/FeedbackPage';
 import SignUp from './Pages/SignUp';
 import NaviBar from './Navi/NaviBar';
 import SignInPage from './Pages/SignInPage';
@@ -29,23 +29,25 @@ class App extends React.Component {
                 <NaviBar/>
               }
               <Switch>
-                <Route path = "/">
-                  <HomePage/>
-                </Route>
-                <Route path = "/Resume">
+              <Route path = "/Resume">
                   <ResumePage/>
                 </Route>
-                <Route path= "/portfolio">
+                
+                
+                <Route path= "/projects">
                   <PortfolioPage/>
                 </Route>
-                <Route path = "/sign-in">
+                <Route path = "/signin">
                   <SignInPage/>
                 </Route>
-                <Route path = "/sign-up">
+                <Route path = "/signup">
                   <SignUp/>
                 </Route>
-                <Route path = "/contact">
-                  <ContactPage/>
+                <Route path = "/feedback">
+                  <FeedbackPage/>
+                </Route>
+                <Route path = "/">
+                  <HomePage/>
                 </Route>
               </Switch>
             </div>

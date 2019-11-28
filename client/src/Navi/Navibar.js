@@ -13,7 +13,8 @@ class NaviBar extends React.Component {
         this.handleResumePageNavi = this.handleResumePageNavi.bind(this);
         this.handleProjectPageNavi = this.handleProjectPageNavi.bind(this);
         this.handleSignInPageNavi = this.handleSignInPageNavi.bind(this);
-        this.handleContactPageNavi = this.handleContactPageNavi.bind(this);
+        this.handlefeedbackPageNavi = this.handlefeedbackPageNavi.bind(this);
+        this.handleSignUpPageNavi=this.handleSignUpPageNavi.bind(this);
     }
     handleHomePageNavi(){
         const {history} = this.props;
@@ -21,19 +22,23 @@ class NaviBar extends React.Component {
     }
     handleResumePageNavi(){
         const {history} = this.props;
-        history.push("/");
+        history.push("/Resume");
     }
     handleProjectPageNavi(){
         const {history} = this.props;
-        history.push("/");
+        history.push("/projects");
     }
     handleSignInPageNavi(){
         const {history} = this.props;
-        history.push("/");
+        history.push("/signin");
     }
-    handleContactPageNavi(){
+    handlefeedbackPageNavi(){
         const {history} = this.props;
-        history.push("/");
+        history.push("/feedback");
+    }
+    handleSignUpPageNavi(){
+        const {history} = this.props;
+        history.push("/signup");
     }
 
     render(){
@@ -61,12 +66,16 @@ class NaviBar extends React.Component {
                             </Button>
 
                         {/* <Button color = {"inherit"}
-                            onClick = {this.handleContactPageNavi}>
-                                Contact Me
+                            onClick = {this.handlefeedbackPageNavi}>
+                                feedback Me
                             </Button>*/}
                             <Button color = {"inherit"}
                             onClick = {this.handleSignInPageNavi}>
                                 Sign-in
+                            </Button>
+                            <Button color = {"inherit"}
+                            onClick = {this.handleSignUpPageNavi}>
+                                Sign Up
                             </Button>
 
                         </Toolbar>
@@ -98,13 +107,17 @@ class NaviBar extends React.Component {
                             </Button>
 
                              <Button color = {"inherit"}
-                            onClick = {this.handleContactPageNavi}>
-                                Contact Me
+                            onClick = {this.handlefeedbackPageNavi}>
+                                feedback Me
                             </Button>
 
                             <Button color = {"inherit"}
                             onClick = {this.handleSignInPageNavi}>
                                 Sign-in
+                            </Button>
+                            <Button color = {"inherit"}
+                            onClick = {this.handleSignUpPageNavi}>
+                                Sign Up
                             </Button>
 
                         </Toolbar>
@@ -114,4 +127,4 @@ class NaviBar extends React.Component {
         }
     }
 }
-export default NaviBar;
+export default withRouter(NaviBar);

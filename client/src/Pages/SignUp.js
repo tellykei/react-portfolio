@@ -85,6 +85,9 @@ class SignUp extends React.Component{
                         <Typography color={"textSecondary"}>
                             { user.emailAddress }
                         </Typography>
+                        <Typography color={"textSecondary"}>
+                            { user.password }
+                        </Typography>
                     </CardContent>
                 </Card>
             )

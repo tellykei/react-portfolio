@@ -91,6 +91,7 @@ class SignInPage extends React.Component {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
+                onClick
               >
                 Sign In
               </Button>
