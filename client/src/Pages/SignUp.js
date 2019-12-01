@@ -13,7 +13,8 @@ class SignUp extends React.Component{
             users: [],
             username: '',
             userEmailAddress: '',
-            userPassword:''
+            userPassword:'',
+            errors:{}
         };
         this.loadUsers = this.loadUsers.bind(this);
         this.handleUserEmailAddressChange = this.handleUserEmailAddressChange.bind(this);
@@ -25,13 +26,9 @@ class SignUp extends React.Component{
         await this.loadUsers()
     }
     async loadUsers() {
-
         try {
-
             const response = await Axios.get('/api/users');
-
             const { data } = response;
-
             this.setState({ users: data });
 
         } catch (error) {
@@ -54,49 +51,27 @@ class SignUp extends React.Component{
 
         try {
 
-            // This is the JSON payload that will be delivered to the server in 'request.body'
             const data = { name: username, emailAddress: userEmailAddress, password: userPassword };
 
-            // We are now doing a POST request because we are storing a new user
-            await Axios.post('/api/users', data);
+              await Axios.post('/api/users', data);
 
         } catch (error) {
 
             console.error(error.message);
         }
 
-        // Reload the users straight from the server
         await this.loadUsers();
     }
     render() {
-
+        const{errors}= this.state;
         const { users, userName, userEmailAddress, userPassword } = this.state;
-
-        // For each user in the database, create a card
-        const userCards = users.map((user) => {
-
-            return (
-                <Card style={{ margin: '1rem' }} key={JSON.stringify(user)}>
-                    <CardContent>
-                        <Typography color={"textSecondary"}>
-                            { user.name }
-                        </Typography>
-                        
-                        <Typography color={"textSecondary"}>
-                            { user.emailAddress }
-                        </Typography>
-                        <Typography color={"textSecondary"}>
-                            { user.password }
-                        </Typography>
-                    </CardContent>
-                </Card>
-            )
-        });
-
         return (
 
             <div style={{ margin: '1rem' }}>
-
+            <Typography component="h1" variant="h5">
+              Create a new account
+            </Typography>
+                <form>
                 <TextField 
                     label={'Name'}
                     value={userName}
@@ -109,8 +84,10 @@ class SignUp extends React.Component{
                     value={userEmailAddress}
                     onChange={this.handleUserEmailAddressChange}
                     style={{ margin: '1rem' }}
+                    error = {errors.email}
                 />
                 <TextField 
+                    type = "password"
                     label={'Password'}
                     value={userPassword}
                     onChange={this.handleUserPasswordChange}
@@ -125,16 +102,7 @@ class SignUp extends React.Component{
                         Submit
                     </Button>
                 </div>
-
-                <Typography 
-                    color={"textSecondary"} 
-                    variant={'h4'}
-                    style={{ padding: '1rem' }}>
-
-                    Users
-                </Typography>
-
-                { userCards }
+                </form>
             </div>
         );
     }
