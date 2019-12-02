@@ -31,10 +31,7 @@ class App extends React.Component {
                 <NaviBar/>
               }
               <Switch>
-              <Route path = "/Resume">
-                  <ResumePage/>
-                </Route>
-                
+          
                 
                 <Route path= "/projects">
                   <PortfolioPage/>
@@ -45,7 +42,7 @@ class App extends React.Component {
                 <Route path = "/signup">
                   <SignUp/>
                 </Route>
-                <Route path = "/feedback" componet = {withAuth(FeedbackPage)}>
+                <Route path = "/feedback"> 
                   
                 </Route>
                 <Route path = "/">

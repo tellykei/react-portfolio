@@ -81,12 +81,13 @@ class FeedbackPage extends React.Component {
         });
 
         return (
-
-            <div style={{ margin: '1rem' }}>
-
+            <div style={{ margin: '1rem' }} align = "center">
+                Feedback
+                <form>
                 <TextField 
                     label={'Name'}
                     value={name}
+                    variant="outlined"
                     onChange={this.handleUserNameChange}
                     style={{ margin: '1rem' }}
                 />
@@ -94,6 +95,9 @@ class FeedbackPage extends React.Component {
                 <TextField 
                     label={'message'}
                     value={message}
+                    variant = "outlined"
+                    multiline
+                    rows = '3'
                     onChange={this.handleUserMessageChange}
                     style={{ margin: '1rem' }}
                 />
@@ -106,11 +110,12 @@ class FeedbackPage extends React.Component {
                         Submit
                     </Button>
                 </div>
-
+                </form>
                 <Typography 
                     color={"textSecondary"} 
                     variant={'h4'}
-                    style={{ padding: '1rem' }}>
+                    style={{ padding: '1rem' }}
+                    align = "center">
 
                     Messages
                 </Typography>

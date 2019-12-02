@@ -5,12 +5,19 @@ import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import MenuIcon from "@material-ui/icons/Menu";
 import { withRouter } from "react-router-dom";
+import CommentIcon from '@material-ui/icons/Comment';
+import { withStyles } from "@material-ui/core/styles";
+import Icon from '@material-ui/core/Icon';
+import HomeIcon from '@material-ui/icons/Home';
+import FolderSharedIcon from '@material-ui/icons/FolderShared';
+import PersonIcon from '@material-ui/icons/Person';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import { mergeClasses } from "@material-ui/styles";
 
 class NaviBar extends React.Component {
     constructor(props){
         super(props);
         this.handleHomePageNavi = this.handleHomePageNavi.bind(this);
-        this.handleResumePageNavi = this.handleResumePageNavi.bind(this);
         this.handleProjectPageNavi = this.handleProjectPageNavi.bind(this);
         this.handleSignInPageNavi = this.handleSignInPageNavi.bind(this);
         this.handlefeedbackPageNavi = this.handlefeedbackPageNavi.bind(this);
@@ -19,10 +26,6 @@ class NaviBar extends React.Component {
     handleHomePageNavi(){
         const {history} = this.props;
         history.push("/");
-    }
-    handleResumePageNavi(){
-        const {history} = this.props;
-        history.push("/Resume");
     }
     handleProjectPageNavi(){
         const {history} = this.props;
@@ -42,89 +45,50 @@ class NaviBar extends React.Component {
     }
 
     render(){
-        const loggedin = false;
-        if(!loggedin){
             return(
-                <div>
-                    <AppBar position = "static">
-                        <Toolbar>
+                <div >
+                    <AppBar position = "static" >
+                        <Toolbar >
                             <IconButton edge = "start" color = "inherit" aria-label = "menu">
                                 <MenuIcon/>
                             </IconButton>
+                            <span style ={{marginLeft: "25rem"}}>
                             <Button color = {"inherit"}
-                            onClick = {this.handleHomePageNavi}>
-                                Home
-                            </Button>
-                            <Button color = {"inherit"}
-                            onClick = {this.handleResumePageNavi}>
-                                Resume
-                            </Button>
-
-                            <Button color = {"inherit"}
-                            onClick = {this.handleProjectPageNavi}>
-                                Portfolio
-                            </Button>
-
-                        {<Button color = {"inherit"}
-                            onClick = {this.handlefeedbackPageNavi}>
-                                feedback Me
-                            </Button>}
-                            <Button color = {"inherit"}
-                            onClick = {this.handleSignInPageNavi}>
-                                Sign-in
-                            </Button>
-                            <Button color = {"inherit"}
-                            onClick = {this.handleSignUpPageNavi}>
-                                Sign Up
-                            </Button>
-
-                        </Toolbar>
-                    </AppBar>
-                </div>
-            );
-        }
-        else{
-            return(
-                <div>
-                    <AppBar position = "static">
-                        <Toolbar>
-                            <IconButton edge = "start" color = "inherit" aria-label = "menu">
-                                <MenuIcon/>
-                            </IconButton>
-                            <Button color = {"inherit"}
+                            align = "center"
+                            startIcon = {<HomeIcon/>}
                             onClick = {this.handleHomePageNavi}>
                                 Home
                             </Button>
 
                             <Button color = {"inherit"}
-                            onClick = {this.handleResumePageNavi}>
-                                Resume Me
-                            </Button>
-
-                            <Button color = {"inherit"}
+                            startIcon={<FolderSharedIcon/>}
                             onClick = {this.handleProjectPageNavi}>
                                 Portfolio
+                            
                             </Button>
-
-                             <Button color = {"inherit"}
-                            onClick = {this.handlefeedbackPageNavi}>
-                                feedback Me
+                            <Button
+                            showLabels
+                            color = {'inherit'}
+                            startIcon={< CommentIcon/>  }
+                            onClick= {this.handlefeedbackPageNavi}
+                            >
+                                FeedBack
                             </Button>
-
                             <Button color = {"inherit"}
+                            startIcon={<PersonIcon/>}
                             onClick = {this.handleSignInPageNavi}>
-                                Sign-in
+                                Login
                             </Button>
                             <Button color = {"inherit"}
+                            startIcon = {<PersonAddIcon/>}
                             onClick = {this.handleSignUpPageNavi}>
                                 Sign Up
                             </Button>
-
+                            </span>
                         </Toolbar>
                     </AppBar>
                 </div>
             );
         }
-    }
 }
 export default withRouter(NaviBar);

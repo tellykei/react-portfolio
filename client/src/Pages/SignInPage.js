@@ -62,18 +62,20 @@ class SignInPage extends React.Component {
         await this.loadUsers();
     }
     render() {
+        const { userEmailAddress, userPassword } = this.state;
         return(
-        <div className="container" style={{ marginTop: '50px', width: '700px'}}>
+        <div align = "center"  style={{ marginTop: '50px', width: '700px'}} >
             <h2 style={{marginBottom: '40px'}}>Login</h2>
             <form onSubmit={ this.handleSubmit }>
                 <div className="form-group">
                     <input
-                    type="email"
+                    type="Email"
                     placeholder="Email"
                     className="form-control"
-                    name="email"
+                    name="Email"
+                    variant = "outlined"
                     onChange={ this.handleUserEmailAddressChange }
-                    value={ this.state.email }
+                    value={userEmailAddress}
                     />
                 </div>
                 <div className="form-group">
@@ -82,8 +84,9 @@ class SignInPage extends React.Component {
                     placeholder="Password"
                     className="form-control"
                     name="password"
+                    variant = "outlined"
                     onChange={ this.handleUserPasswordChange }
-                    value={ this.state.password }
+                    value={ userPassword }
                     />
                 </div>
                 <div className="form-group">

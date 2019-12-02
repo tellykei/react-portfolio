@@ -83,20 +83,20 @@ class SignUp extends React.Component{
         });
 
         return (
-            <div sclassName="container" style={{ marginTop: '50px', width: '700px'}}>
+            <div className="container" style={{ marginTop: '5rem'}} align= "center">
             <Typography component="h1" variant="h5">
               Create a new account
-            </Typography>
+            </Typography >
                 <form>
                 <div className="form-group">
                 <TextField 
                     type = "name"
                     placeholder= "Name"
-                    className = "form-control"
                     label={'Name'}
                     value={userName}
                     onChange={this.handleUserNameChange}
-                    style={{ margin: '1rem' }}
+                    variant = "outlined"
+                    
                     required
                 />
                 </div>
@@ -104,20 +104,18 @@ class SignUp extends React.Component{
                 <TextField
                     type= "email"
                     placeholder= "Email"
-                    label={'Email Address'}
-                    className= "form-control"
+                    label='Email Address'
+                    variant = "outlined"
                     value={userEmailAddress}
                     onChange={this.handleUserEmailAddressChange}
-                    style={{ margin: '1rem' }}
-                    
                     required
                 />
                 <div className="form-group">
                 <TextField
                     type = "password"
                     placeholder = "password"
-                    className= "form-control"
-                    label={'Password'}
+                    label='Password'
+                    variant = "outlined"
                     value={userPassword}
                     onChange={this.handleUserPasswordChange}
                     style={{ margin: '1rem' }}
@@ -129,7 +127,6 @@ class SignUp extends React.Component{
                     <Button type="submit" className="btn btn-primary"
                         onClick={this.handleUserSubmit} 
                         variant={'contained'}>
-
                         Submit
                     </Button>
                 </div>
