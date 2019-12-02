@@ -51,7 +51,7 @@ class SignUp extends React.Component{
 
         try {
 
-            const data = { name: username, email: userEmailAddress, password: userPassword };
+            const data = { names: username, email: userEmailAddress, password: userPassword };
 
               await Axios.post('/api/users', data);
 
