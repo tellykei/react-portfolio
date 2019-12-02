@@ -51,7 +51,7 @@ class SignUp extends React.Component{
 
         try {
 
-            const data = { name: username, emailAddress: userEmailAddress, password: userPassword };
+            const data = { name: username, email: userEmailAddress, password: userPassword };
 
               await Axios.post('/api/users', data);
 
@@ -63,39 +63,70 @@ class SignUp extends React.Component{
         await this.loadUsers();
     }
     render() {
-        const{errors}= this.state;
         const { users, userName, userEmailAddress, userPassword } = this.state;
-        return (
+        
+        const userCards = users.map((user) => {
 
-            <div style={{ margin: '1rem' }}>
+            return (
+                <Card style={{ margin: '1rem' }} key={JSON.stringify(user)}>
+                    <CardContent>
+                        <Typography color={"textSecondary"}>
+                            { user.name }
+                        </Typography>
+                        
+                        <Typography color={"textSecondary"}>
+                            { user.emailAddress }
+                        </Typography>
+                    </CardContent>
+                </Card>
+            )
+        });
+
+        return (
+            <div sclassName="container" style={{ marginTop: '50px', width: '700px'}}>
             <Typography component="h1" variant="h5">
               Create a new account
             </Typography>
                 <form>
-                <TextField 
+                <div className="form-group">
+                <input 
+                    type = "name"
+                    placeholder= "Name"
+                    className = "form-control"
                     label={'Name'}
                     value={userName}
                     onChange={this.handleUserNameChange}
                     style={{ margin: '1rem' }}
+                    required
                 />
+                </div>
 
-                <TextField 
+                <input
+                    type= "email"
+                    placeholder= "Email"
                     label={'Email Address'}
+                    className= "form-control"
                     value={userEmailAddress}
                     onChange={this.handleUserEmailAddressChange}
                     style={{ margin: '1rem' }}
-                    error = {errors.email}
+                    
+                    required
                 />
-                <TextField 
+                <div className="form-group">
+                <input
                     type = "password"
+                    placeholder = "password"
+                    className= "form-control"
                     label={'Password'}
                     value={userPassword}
                     onChange={this.handleUserPasswordChange}
                     style={{ margin: '1rem' }}
+                    required
                 />
+                </div>
 
-                <div style={{ margin: '1rem' }}>
-                    <Button 
+                <div className="form-group">
+                    <Button type="submit" className="btn btn-primary"
                         onClick={this.handleUserSubmit} 
                         variant={'contained'}>
 
@@ -103,6 +134,7 @@ class SignUp extends React.Component{
                     </Button>
                 </div>
                 </form>
+                {userCards}
             </div>
         );
     }

@@ -65,10 +65,10 @@ class NaviBar extends React.Component {
                                 Portfolio
                             </Button>
 
-                        {/* <Button color = {"inherit"}
+                        {<Button color = {"inherit"}
                             onClick = {this.handlefeedbackPageNavi}>
                                 feedback Me
-                            </Button>*/}
+                            </Button>}
                             <Button color = {"inherit"}
                             onClick = {this.handleSignInPageNavi}>
                                 Sign-in

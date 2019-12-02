@@ -2,13 +2,21 @@ const Express = require('express');
 const Mongoose = require('mongoose')
 const bcrypt = require('bcryptjs');
 const User = require('./model/user');
+const Messages = require('./model/messages');
+const withAuth = require('./middleware');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
 
 const app = Express();
 
 
-Mongoose.connect('mongodb://localhost/newtest',{useNewUrlParser:true});
+Mongoose.connect('mongodb://localhost/newtesty',{useNewUrlParser:true});
 
 Mongoose.connection.once('open', ()=> console.log("Connected to database!"));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.use(Express.json());
 
@@ -24,7 +32,7 @@ app.post('/api/users', async (request, response) => {
 
     console.log('A request came in with the body: ' + JSON.stringify(request.body));
 
-    const { name, emailAddress, password } = request.body;
+    const { name, email, password } = request.body;
 
     try {
 
@@ -50,10 +58,14 @@ app.post('/api/users', async (request, response) => {
 
 
 
-        await User.create({ name: name, email: emailAddress, password: hash});
+        await User.create({ name: name, email: email, password: hash});
 
-        console.log(`A new user was created with name: '${name}' and email address: '${emailAddress}'`);
-
+        console.log(`A new user was created with name: '${name}' and email address: '${email}'`);
+      /*  const payload = { email };
+        const token = jwt.sign(payload, {
+          expiresIn: '1h'
+        });
+        res.cookie('token', token, { httpOnly: true }).sendStatus(200);*/
         return response.sendStatus(200);
         });
     } catch (error) {
@@ -63,7 +75,7 @@ app.post('/api/users', async (request, response) => {
         return response.sendStatus(400);
     }
 });
-app.post('/sessions', async (request, response) => {
+app.post('/api/sessions', async (request, response) => {
 
     // Pull the login credentials from the request
     const { email, password } = request.body;
@@ -95,7 +107,11 @@ app.post('/sessions', async (request, response) => {
         if (result === true) {
 
             console.log('User successfully logged in!');
-
+            const payload = { email };
+            const token = jwt.sign(payload, secret, {
+              expiresIn: '1h'
+            });
+            res.cookie('token', token, { httpOnly: true }).sendStatus(200);
             return response.sendStatus(200);
         }
 
@@ -106,7 +122,23 @@ app.post('/sessions', async (request, response) => {
     });
 });
 
+app.get('/checkToken', withAuth, function(req, res) {
+    res.sendStatus(200);
+  });
+app.post('messages', async(request, response)=>{
+    const{name, message}= request.body;
+    await Messages.create({name:name,message:messaage});
+    console.log("a new message was created " + message);
+    return response.sendStatus(200);
+});
+app.get('messages',async (request, response) => {
 
-const port = process.evn.PORT || 8000;
-app.listen(port, () => console.log(`Server has started on localhost:${port}`));
+    console.log('A GET request came in asking for all users');
+
+    const message = await Messages.find({});
+
+    return response.send(message).status(200);
+});
+
+app.listen(8000, () => console.log(`Server has started on localhost`));
 module.exports = app;

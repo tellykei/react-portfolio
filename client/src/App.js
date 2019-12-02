@@ -11,8 +11,8 @@ import FeedbackPage from './Pages/FeedbackPage';
 import SignUp from './Pages/SignUp';
 import NaviBar from './Navi/NaviBar';
 import SignInPage from './Pages/SignInPage';
-import { Provider } from "react-redux";
-import store from "./store";
+
+import withAuth from './Pages/withAuth';
 const theme = createMuiTheme({
   palette:{
     primary:blue,
@@ -25,7 +25,6 @@ class App extends React.Component {
     return (
       <div>
         <ThemeProvider theme = {theme}>
-        <Provider store={store}> 
           <Router>
             <div>
               {
@@ -46,8 +45,8 @@ class App extends React.Component {
                 <Route path = "/signup">
                   <SignUp/>
                 </Route>
-                <Route path = "/feedback">
-                  <FeedbackPage/>
+                <Route path = "/feedback" componet = {withAuth(FeedbackPage)}>
+                  
                 </Route>
                 <Route path = "/">
                   <HomePage/>
@@ -55,7 +54,6 @@ class App extends React.Component {
               </Switch>
             </div>
           </Router>
-          </Provider>
         </ThemeProvider>
       </div>
     );

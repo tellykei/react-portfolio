@@ -8,34 +8,59 @@ import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
+import Axios from 'axios';
 
 class SignInPage extends React.Component {
     constructor() {
         super();
         this.state = {
-            email: '',
-            password: '',
-            errors: {}
+            users: [],
+            userEmailAddress: '',
+            userPassword:''
         }
-        this.handleInputChange = this.handleInputChange.bind(this);
+        this.loadUsers = this.loadUsers.bind(this);
+        this.handleUserEmailAddressChange = this.handleUserEmailAddressChange.bind(this);
+        this.handleUserPasswordChange = this.handleUserPasswordChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-
-    handleInputChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+    async componentDidMount(){
+        await this.loadUsers()
     }
 
-    handleSubmit(e) {
-        e.preventDefault();
-        const user = {
-            email: this.state.email,
-            password: this.state.password,
+    async loadUsers() {
+        try {
+            const response = await Axios.get('/api/users');
+            const { data } = response;
+            this.setState({ users: data });
+
+        } catch (error) {
+
+            console.error(error.message);
         }
-        console.log(user);
     }
 
+    handleUserEmailAddressChange(event){
+        this.setState({userEmailAddress: event.target.value});
+    }
+    handleUserPasswordChange(event){
+        this.setState({userPassword: event.target.value});
+    }
+
+  async handleSubmit(e) {
+        const { userEmailAddress, userPassword } = this.state;
+        try {
+
+            const data = { email: userEmailAddress, password: userPassword };
+
+              await Axios.post('/sessions', data);
+
+        } catch (error) {
+
+            console.error(error.message);
+        }
+
+        await this.loadUsers();
+    }
     render() {
         return(
         <div className="container" style={{ marginTop: '50px', width: '700px'}}>
@@ -47,7 +72,7 @@ class SignInPage extends React.Component {
                     placeholder="Email"
                     className="form-control"
                     name="email"
-                    onChange={ this.handleInputChange }
+                    onChange={ this.handleUserEmailAddressChange }
                     value={ this.state.email }
                     />
                 </div>
@@ -57,14 +82,17 @@ class SignInPage extends React.Component {
                     placeholder="Password"
                     className="form-control"
                     name="password"
-                    onChange={ this.handleInputChange }
+                    onChange={ this.handleUserPasswordChange }
                     value={ this.state.password }
                     />
                 </div>
                 <div className="form-group">
-                    <button type="submit" className="btn btn-primary">
+                    <Button type="submit" className="btn btn-primary"
+                    onClick = {this.handleSubmit}
+                    variant= {'contained'}
+                    >
                         Login User
-                    </button>
+                    </Button>
                 </div>
             </form>
         </div>
