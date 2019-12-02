@@ -51,7 +51,7 @@ class SignUp extends React.Component{
 
         try {
 
-            const data = { names: username, email: userEmailAddress, password: userPassword };
+            const data = { name: username, email: userEmailAddress, password: userPassword };
 
               await Axios.post('/api/users', data);
 
@@ -89,7 +89,7 @@ class SignUp extends React.Component{
             </Typography>
                 <form>
                 <div className="form-group">
-                <input 
+                <TextField 
                     type = "name"
                     placeholder= "Name"
                     className = "form-control"
@@ -101,7 +101,7 @@ class SignUp extends React.Component{
                 />
                 </div>
 
-                <input
+                <TextField
                     type= "email"
                     placeholder= "Email"
                     label={'Email Address'}
@@ -113,7 +113,7 @@ class SignUp extends React.Component{
                     required
                 />
                 <div className="form-group">
-                <input
+                <TextField
                     type = "password"
                     placeholder = "password"
                     className= "form-control"

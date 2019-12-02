@@ -3,10 +3,10 @@ const Mongoose = require('mongoose')
 const bcrypt = require('bcryptjs');
 const User = require('./model/user');
 const Messages = require('./model/messages');
-const withAuth = require('./middleware');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const jwt = require('jsonwebtoken');
+//const withAuth = require('./middleware');
+//const bodyParser = require('body-parser');
+//const cookieParser = require('cookie-parser');
+//const jwt = require('jsonwebtoken');
 
 const app = Express();
 
@@ -14,9 +14,9 @@ const app = Express();
 Mongoose.connect('mongodb://localhost/newtesty',{useNewUrlParser:true});
 
 Mongoose.connection.once('open', ()=> console.log("Connected to database!"));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(cookieParser());
+//app.use(bodyParser.urlencoded({ extended: false }));
+//app.use(bodyParser.json());
+//app.use(cookieParser());
 
 app.use(Express.json());
 
@@ -122,9 +122,9 @@ app.post('/api/sessions', async (request, response) => {
     });
 });
 
-app.get('/checkToken', withAuth, function(req, res) {
+/*app.get('/checkToken', withAuth, function(req, res) {
     res.sendStatus(200);
-  });
+  });*/
 app.post('messages', async(request, response)=>{
     const{name, message}= request.body;
     await Messages.create({name:name,message:messaage});
