@@ -81,9 +81,11 @@ class FeedbackPage extends React.Component {
         });
 
         return (
-            <div style={{ margin: '1rem' }} align = "center">
-                Feedback
-                <form>
+            <div style={{ margin: '1rem' }} >
+            <Typography component="h1" variant="h5" align='center'>
+              Feedback
+            </Typography >
+                <form align = 'center'>
                 <div>
                 <TextField 
                     label={'Name'}

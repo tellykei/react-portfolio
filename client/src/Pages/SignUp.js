@@ -103,7 +103,7 @@ class SignUp extends React.Component{
                     required
                 />
                 </div>
-
+                <div>
                 <TextField
                     
                     type= "email"
@@ -114,6 +114,7 @@ class SignUp extends React.Component{
                     variant = "outlined"
                     required
                 />
+                </div>
                 <div >
                 <TextField
                     type = "password"
