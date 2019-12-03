@@ -1,14 +1,7 @@
 import React from 'react';
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
 import Axios from 'axios';
+import { TextField } from '@material-ui/core';
 
 class SignInPage extends React.Component {
     constructor() {
@@ -64,35 +57,36 @@ class SignInPage extends React.Component {
     render() {
         const { userEmailAddress, userPassword } = this.state;
         return(
-        <div align = "center"  style={{ marginTop: '50px', width: '700px'}} >
+        <div align = "center"  style={{ marginTop: '50px'}} >
             <h2 style={{marginBottom: '40px'}}>Login</h2>
             <form onSubmit={ this.handleSubmit }>
                 <div className="form-group">
-                    <input
+                    <TextField
                     type="Email"
                     placeholder="Email"
-                    className="form-control"
                     name="Email"
                     variant = "outlined"
                     onChange={ this.handleUserEmailAddressChange }
                     value={userEmailAddress}
+                    style={{  margin: '2rem', width: "20rem" }}
                     />
                 </div>
                 <div className="form-group">
-                    <input
+                    <TextField
                     type="password"
                     placeholder="Password"
-                    className="form-control"
                     name="password"
                     variant = "outlined"
                     onChange={ this.handleUserPasswordChange }
                     value={ userPassword }
+                    style={{  margin: '2rem', width: "20rem" }}
                     />
                 </div>
                 <div className="form-group">
                     <Button type="submit" className="btn btn-primary"
                     onClick = {this.handleSubmit}
                     variant= {'contained'}
+                    color = 'blue'
                     >
                         Login User
                     </Button>

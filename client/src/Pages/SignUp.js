@@ -63,6 +63,7 @@ class SignUp extends React.Component{
         await this.loadUsers();
     }
     render() {
+        
         const { users, userName, userEmailAddress, userPassword } = this.state;
         
         const userCards = users.map((user) => {
@@ -83,12 +84,13 @@ class SignUp extends React.Component{
         });
 
         return (
-            <div className="container" style={{ marginTop: '5rem'}} align= "center">
-            <Typography component="h1" variant="h5">
+            <div className="container" style={{marginTop: '5rem', width : "100%"}}>
+            <Typography component="h1" variant="h5" align='center'>
               Create a new account
             </Typography >
-                <form>
-                <div className="form-group">
+        
+                <form align='center'>
+                <div className="form-group"style={{align:'center'}} >
                 <TextField 
                     type = "name"
                     placeholder= "Name"
@@ -96,21 +98,23 @@ class SignUp extends React.Component{
                     value={userName}
                     onChange={this.handleUserNameChange}
                     variant = "outlined"
-                    
+                    style={{ margin: '2rem', width: "40rem" }}
+                   
                     required
                 />
                 </div>
 
                 <TextField
+                    
                     type= "email"
-                    placeholder= "Email"
                     label='Email Address'
-                    variant = "outlined"
                     value={userEmailAddress}
                     onChange={this.handleUserEmailAddressChange}
+                    style={{ margin: '2rem', width: "40rem" }}
+                    variant = "outlined"
                     required
                 />
-                <div className="form-group">
+                <div >
                 <TextField
                     type = "password"
                     placeholder = "password"
@@ -118,12 +122,13 @@ class SignUp extends React.Component{
                     variant = "outlined"
                     value={userPassword}
                     onChange={this.handleUserPasswordChange}
-                    style={{ margin: '1rem' }}
+                    style={{ margin: '2rem', width: "40rem" }}
+                    
                     required
                 />
                 </div>
 
-                <div className="form-group">
+                <div>
                     <Button type="submit" className="btn btn-primary"
                         onClick={this.handleUserSubmit} 
                         variant={'contained'}>

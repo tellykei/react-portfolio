@@ -84,14 +84,17 @@ class FeedbackPage extends React.Component {
             <div style={{ margin: '1rem' }} align = "center">
                 Feedback
                 <form>
+                <div>
                 <TextField 
                     label={'Name'}
                     value={name}
                     variant="outlined"
                     onChange={this.handleUserNameChange}
-                    style={{ margin: '1rem' }}
+                    align= 'center'
+                    style={{ margin: '1rem' ,width: '20rem',  }}
                 />
-
+                </div>
+                <div>
                 <TextField 
                     label={'message'}
                     value={message}
@@ -99,9 +102,9 @@ class FeedbackPage extends React.Component {
                     multiline
                     rows = '3'
                     onChange={this.handleUserMessageChange}
-                    style={{ margin: '1rem' }}
+                    style={{ margin: '1rem', width: '20rem'}}
                 />
-
+                </div>
                 <div style={{ margin: '1rem' }}>
                     <Button 
                         onClick={this.handleUserSubmit} 
