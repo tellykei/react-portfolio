@@ -15,6 +15,8 @@ var sectionStyle = {
 var paper= {
     margin:'2rem',
     backgroundColor: "lightgray",
+    textAlign: 'center',
+    height: '35rem'
   };
 class HomePage extends React.Component {
     
@@ -22,14 +24,17 @@ class HomePage extends React.Component {
         return(
             <div style = {{margin : '2rem'}} >
                 <div style = {sectionStyle} >
+                    <Typography component="h1" variant="h5" align='center'>
+                        Welcome
+                    </Typography>
                     <Paper style = {paper}>
                         <Grid container spacing = {3}>
-                            <Grid item xs = {8}>
-                                <img  width = '350rem' height = '350rem' src= "https://space-facts.com/wp-content/uploads/saturn.png"/>
+                            <Grid item xs = {4}>
+                                <img   style = {{margin: '2rem', marginLeft : '8rem'}} width = '350rem' height = '350rem' src= "https://space-facts.com/wp-content/uploads/saturn.png"/>
                             </Grid>                       
                         
-                            <Grid item xs={8} >
-                                <Paper >xs=6 sm=3</Paper>
+                            <Grid item xs={4} >
+                                <Paper style={{backgroundColor : 'lightgray', margin:'3rem' }}>xs=6 sm=3</Paper>
                             </Grid>
                         </Grid> 
                     </Paper>
