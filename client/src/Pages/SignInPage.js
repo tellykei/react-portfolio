@@ -23,7 +23,7 @@ class SignInPage extends React.Component {
 
     async loadUsers() {
         try {
-            const response = await Axios.get('/api/users');
+            const response = await Axios.get('/api/user');
             const { data } = response;
             this.setState({ users: data });
 

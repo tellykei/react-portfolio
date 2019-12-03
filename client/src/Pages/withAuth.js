@@ -12,12 +12,12 @@ export default function withAuth(ComponentToProtect) {
     }
 
     componentDidMount() {
-      fetch('/checkToken')
-        .then(res => {
-          if (res.status === 200) {
+      fetch('/api/session')
+        .then(response => {
+          if (response.status === 200) {
             this.setState({ loading: false });
           } else {
-            const error = new Error(res.error);
+            const error = new Error(response.error);
             throw error;
           }
         })
@@ -34,7 +34,7 @@ export default function withAuth(ComponentToProtect) {
         return null;
       }
       if (redirect) {
-        return <Redirect to="/sign-up" />;
+        return <Redirect to="/signup" />;
       }
       return <ComponentToProtect {...this.props} />;
     }

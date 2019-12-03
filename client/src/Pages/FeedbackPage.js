@@ -12,7 +12,8 @@ class FeedbackPage extends React.Component {
         this.state = {
             messagesarr: [],
             name: '',
-            usermessage:''
+            usermessage:'',
+            loggedin: false
         }
         this.loadmessages = this.loadmessages.bind(this);
         this.handleUserMessageChange = this.handleUserMessageChange.bind(this);
@@ -20,6 +21,15 @@ class FeedbackPage extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     async componentDidMount(){
+        
+        fetch('/api/sessions')
+        .then(response => {
+          if (response.status == 200) {
+            this.setState({ loggedin: true });
+            
+        }
+        
+        });
         await this.loadmessages()
     }
 
@@ -60,7 +70,7 @@ class FeedbackPage extends React.Component {
 
     render(){
         
-        const { messagesarr, name, usermessage } = this.state;
+        const { messagesarr, name, usermessage, loggedin} = this.state;
 
         // For each user in the database, create a card
         const messagecard = messagesarr.map((message) => {
@@ -79,7 +89,7 @@ class FeedbackPage extends React.Component {
                 </Card>
             )
         });
-
+        if(loggedin ==true){
         return (
             <div style={{ marginTop: '2rem' }} >
             <Typography component="h1" variant="h5" align='center'>
@@ -127,6 +137,14 @@ class FeedbackPage extends React.Component {
                 { messagecard }
             </div>
         );
+        }
+    else{
+        return(
+            <div>
+                not logged in
+            </div>
+        );
+    }
     }
 }
 export default FeedbackPage;

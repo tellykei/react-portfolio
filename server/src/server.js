@@ -26,8 +26,10 @@ app.get('/api/users', async (request, response) => {
     console.log('A GET request came in asking for all users');
 
     const users = await User.find({});
-
+    
     return response.send(users).status(200);
+
+    
 });
 app.post('/api/users', async (request, response) => {
 
@@ -67,7 +69,9 @@ app.post('/api/users', async (request, response) => {
           expiresIn: '1h'
         });
         res.cookie('token', token, { httpOnly: true }).sendStatus(200);*/
+        const loggedin = true;
         return response.sendStatus(200);
+        
         });
     } catch (error) {
 
@@ -92,6 +96,7 @@ app.post('/api/messages', async (request, response)=>{
     try{
         await Messageuser.create({name:name, messages:messages});
         console.log("a new message was created " + messages);
+        
         return response.sendStatus(200);
     }
     catch(error){
@@ -111,7 +116,10 @@ app.post('/api/sessions', async (request, response) => {
     if (!users) {
 
         console.log('No user was found with the email address: ' + email);
-
+        const loggedin = false;
+        if (loggedin===false) {
+            res.status(401).send('Unauthorized: No token provided');
+        }
         return response.sendStatus(400);
     }
 
@@ -123,7 +131,10 @@ app.post('/api/sessions', async (request, response) => {
         if (error) {
 
             console.error('There was an error checking the users password hash: ' + error.message);
-
+            const loggedin = false;
+            if (loggedin==false) {
+            res.status(401).send('Unauthorized: No token provided');
+        }
             return response.sendStatus(400);
         }
 
@@ -131,12 +142,15 @@ app.post('/api/sessions', async (request, response) => {
         if (result === true) {
 
             console.log('User successfully logged in!');
-            
+            const loggedin =true;
             return response.sendStatus(200);
         }
 
         console.log('User failed login, incorrect password');
-
+        const loggedin = false;
+        if (loggedin==false) {
+            res.status(401).send('Unauthorized: No token provided');
+        }
         // Dont tell the user why the login failed, it just failed with a 400 ‾\_(ツ)_/‾
         return response.sendStatus(400);
     });
@@ -145,7 +159,6 @@ app.post('/api/sessions', async (request, response) => {
 /*app.get('/checkToken', withAuth, function(req, res) {
     res.sendStatus(200);
   });*/
-
 
 
 
