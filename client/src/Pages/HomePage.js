@@ -14,7 +14,7 @@ var sectionStyle = {
   };
 var paper= {
     margin:'2rem',
-    backgroundColor: "lightgray",
+    backgroundColor: "lightblue",
     textAlign: 'center',
     height: '35rem'
   };
@@ -24,17 +24,27 @@ class HomePage extends React.Component {
         return(
             <div style = {{margin : '2rem'}} >
                 <div style = {sectionStyle} >
-                    <Typography component="h1" variant="h5" align='center'>
-                        Welcome
+                    <Typography component="h1"  align='center'>
+                       <h1> Welcome</h1>
                     </Typography>
                     <Paper style = {paper}>
                         <Grid container spacing = {3}>
-                            <Grid item xs = {4}>
+                            <Grid item xs = {4} >
                                 <img   style = {{margin: '2rem', marginLeft : '8rem'}} width = '350rem' height = '350rem' src= "https://space-facts.com/wp-content/uploads/saturn.png"/>
                             </Grid>                       
                         
-                            <Grid item xs={4} >
-                                <Paper style={{backgroundColor : 'lightgray', margin:'3rem' }}>xs=6 sm=3</Paper>
+                            <Grid item xs={6} >
+                                <Paper style={{backgroundColor : 'powderblue', margin: '2rem',marginLeft:'10rem', height:'25rem' }}>
+                                    <Typography >
+                                        <h2>Taliyah </h2>
+                                        <p>Computer Science</p>
+                                        <p>UNH</p>
+                                        <p>Class of 2020</p>
+                                        <p style= {{marginTop:'2rem'}}>Hello, welcome to my portfolio. Contact information is 
+                                            on the portfolio page</p>
+                                        
+                                    </Typography>
+                                </Paper>
                             </Grid>
                         </Grid> 
                     </Paper>
