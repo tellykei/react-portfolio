@@ -10,9 +10,9 @@ class FeedbackPage extends React.Component {
     constructor() {
         super();
         this.state = {
-            messages: [],
+            messagesarr: [],
             name: '',
-            message:''
+            usermessage:''
         }
         this.loadmessages = this.loadmessages.bind(this);
         this.handleUserMessageChange = this.handleUserMessageChange.bind(this);
@@ -27,7 +27,7 @@ class FeedbackPage extends React.Component {
         try {
             const response = await Axios.get('/api/messages');
             const { data } = response;
-            this.setState({ messages: data });
+            this.setState({ messagesarr: data });
 
         } catch (error) {
 
@@ -39,16 +39,16 @@ class FeedbackPage extends React.Component {
         this.setState({name:event.target.value});
     }
     handleUserMessageChange(event){
-        this.setState({message: event.target.value});
+        this.setState({usermessage: event.target.value});
     }
 
   async handleSubmit(e) {
-        const { name, message } = this.state;
+        const { name, usermessage } = this.state;
         try {
 
-            const data = { name: name, message: message };
+            const data = { name: name, messages: usermessage };
 
-              await Axios.post('/messages', data);
+              await Axios.post('/api/messages', data);
 
         } catch (error) {
 
@@ -60,10 +60,10 @@ class FeedbackPage extends React.Component {
 
     render(){
         
-        const { messages, name, message } = this.state;
+        const { messagesarr, name, usermessage } = this.state;
 
         // For each user in the database, create a card
-        const messagess = messages.map((messages) => {
+        const messagecard = messagesarr.map((message) => {
 
             return (
                 <Card style={{ margin: '1rem' }} key={JSON.stringify(message)}>
@@ -73,7 +73,7 @@ class FeedbackPage extends React.Component {
                         </Typography>
                         
                         <Typography color={"textSecondary"}>
-                            { message.message }
+                            { message.messages }
                         </Typography>
                     </CardContent>
                 </Card>
@@ -81,7 +81,7 @@ class FeedbackPage extends React.Component {
         });
 
         return (
-            <div style={{ margin: '1rem' }} >
+            <div style={{ marginTop: '2rem' }} >
             <Typography component="h1" variant="h5" align='center'>
               Feedback
             </Typography >
@@ -99,12 +99,12 @@ class FeedbackPage extends React.Component {
                 <div>
                 <TextField 
                     label={'message'}
-                    value={message}
+                    value={usermessage}
                     variant = "outlined"
                     multiline
                     rows = '3'
                     onChange={this.handleUserMessageChange}
-                    style={{ margin: '1rem', width: '20rem'}}
+                    style={{ margin: '1rem', width: '25rem'}}
                 />
                 </div>
                 <div style={{ margin: '1rem' }}>
@@ -124,8 +124,7 @@ class FeedbackPage extends React.Component {
 
                     Messages
                 </Typography>
-
-                { messagess }
+                { messagecard }
             </div>
         );
     }

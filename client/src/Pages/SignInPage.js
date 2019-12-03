@@ -2,6 +2,7 @@ import React from 'react';
 import Button from "@material-ui/core/Button";
 import Axios from 'axios';
 import { TextField } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 
 class SignInPage extends React.Component {
     constructor() {
@@ -45,7 +46,7 @@ class SignInPage extends React.Component {
 
             const data = { email: userEmailAddress, password: userPassword };
 
-              await Axios.post('/sessions', data);
+              await Axios.post('/api/sessions', data);
 
         } catch (error) {
 
@@ -57,25 +58,27 @@ class SignInPage extends React.Component {
     render() {
         const { userEmailAddress, userPassword } = this.state;
         return(
-        <div align = "center"  style={{ marginTop: '50px'}} >
-            <h2 style={{marginBottom: '40px'}}>Login</h2>
-            <form onSubmit={ this.handleSubmit }>
+        <div  style={{ marginTop: '50px'}} >
+           <Typography component="h1" variant="h5" align='center'>
+              Login
+            </Typography >
+            <form align='center'>
                 <div className="form-group">
                     <TextField
                     type="Email"
                     placeholder="Email"
-                    name="Email"
+                    label={"Email"}
                     variant = "outlined"
                     onChange={ this.handleUserEmailAddressChange }
                     value={userEmailAddress}
-                    style={{  margin: '2rem', width: "20rem" }}
+                    style={{  margin: '1rem', width: "20rem" }}
                     />
                 </div>
                 <div className="form-group">
                     <TextField
                     type="password"
                     placeholder="Password"
-                    name="password"
+                    label={"password"}
                     variant = "outlined"
                     onChange={ this.handleUserPasswordChange }
                     value={ userPassword }
@@ -85,9 +88,7 @@ class SignInPage extends React.Component {
                 <div className="form-group">
                     <Button type="submit" className="btn btn-primary"
                     onClick = {this.handleSubmit}
-                    variant= {'contained'}
-                    color = 'blue'
-                    >
+                    variant= {'contained'}>
                         Login User
                     </Button>
                 </div>

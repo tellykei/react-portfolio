@@ -1,8 +1,8 @@
 const Express = require('express');
 const Mongoose = require('mongoose')
 const bcrypt = require('bcryptjs');
-const User = require('./model/user');
-const Messages = require('./model/messages');
+const User = require('./model/users');
+const Messageuser = require('./model/messages');
 //const withAuth = require('./middleware');
 //const bodyParser = require('body-parser');
 //const cookieParser = require('cookie-parser');
@@ -11,7 +11,7 @@ const Messages = require('./model/messages');
 const app = Express();
 
 
-Mongoose.connect('mongodb://localhost/newtesty',{useNewUrlParser:true});
+Mongoose.connect('mongodb://localhost/prousers',{useNewUrlParser:true});
 
 Mongoose.connection.once('open', ()=> console.log("Connected to database!"));
 //app.use(bodyParser.urlencoded({ extended: false }));
@@ -19,6 +19,7 @@ Mongoose.connection.once('open', ()=> console.log("Connected to database!"));
 //app.use(cookieParser());
 
 app.use(Express.json());
+
 
 app.get('/api/users', async (request, response) => {
 
@@ -75,16 +76,39 @@ app.post('/api/users', async (request, response) => {
         return response.sendStatus(400);
     }
 });
+app.get('/api/messages',async (request, response) => {
+
+    console.log('A GET request came in asking for all messages');
+
+    const messages = await Messageuser.find({});
+
+    return response.send(messages).status(200);
+});
+
+
+app.post('/api/messages', async (request, response)=>{
+    console.log('A request came in with the body: ' + JSON.stringify(request.body));
+    const{name, messages}= request.body;
+    try{
+        await Messageuser.create({name:name, messages:messages});
+        console.log("a new message was created " + messages);
+        return response.sendStatus(200);
+    }
+    catch(error){
+        console.error("something went wrong while creating a message");
+        return response.sendStatus(400);
+    }
+});
 app.post('/api/sessions', async (request, response) => {
 
     // Pull the login credentials from the request
     const { email, password } = request.body;
 
     // Find a user with the email address specified
-    const user = await User.findOne({ email: { $eq: email }});
+    const users = await User.findOne({ email: { $eq: email }});
 
     // No user was found with that email address, dont tell the user this to mitigate user enumeration attacks, just return a 400
-    if (!user) {
+    if (!users) {
 
         console.log('No user was found with the email address: ' + email);
 
@@ -93,7 +117,7 @@ app.post('/api/sessions', async (request, response) => {
 
     // Let Bcrypt figure out if the given plaintext password equals the one saved in the database
     // Bcrypt will handle the random salt it gave the password when the user was created
-    bcrypt.compare(password, user.passwordDigest, (error, result) => {
+    bcrypt.compare(password, users.password, (error, result) => {
 
         // Not common, return a 400 if there was an error
         if (error) {
@@ -107,11 +131,7 @@ app.post('/api/sessions', async (request, response) => {
         if (result === true) {
 
             console.log('User successfully logged in!');
-            const payload = { email };
-            const token = jwt.sign(payload, secret, {
-              expiresIn: '1h'
-            });
-            res.cookie('token', token, { httpOnly: true }).sendStatus(200);
+            
             return response.sendStatus(200);
         }
 
@@ -125,20 +145,9 @@ app.post('/api/sessions', async (request, response) => {
 /*app.get('/checkToken', withAuth, function(req, res) {
     res.sendStatus(200);
   });*/
-app.post('messages', async(request, response)=>{
-    const{name, message}= request.body;
-    await Messages.create({name:name,message:messaage});
-    console.log("a new message was created " + message);
-    return response.sendStatus(200);
-});
-app.get('messages',async (request, response) => {
 
-    console.log('A GET request came in asking for all users');
 
-    const message = await Messages.find({});
 
-    return response.send(message).status(200);
-});
 
 app.listen(8000, () => console.log(`Server has started on localhost`));
 module.exports = app;

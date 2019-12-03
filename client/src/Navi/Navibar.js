@@ -6,13 +6,11 @@ import Button from "@material-ui/core/Button";
 import MenuIcon from "@material-ui/icons/Menu";
 import { withRouter } from "react-router-dom";
 import CommentIcon from '@material-ui/icons/Comment';
-import { withStyles } from "@material-ui/core/styles";
-import Icon from '@material-ui/core/Icon';
 import HomeIcon from '@material-ui/icons/Home';
 import FolderSharedIcon from '@material-ui/icons/FolderShared';
 import PersonIcon from '@material-ui/icons/Person';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import { mergeClasses } from "@material-ui/styles";
+
 
 class NaviBar extends React.Component {
     constructor(props){

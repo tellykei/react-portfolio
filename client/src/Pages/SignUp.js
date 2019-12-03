@@ -13,8 +13,7 @@ class SignUp extends React.Component{
             users: [],
             username: '',
             userEmailAddress: '',
-            userPassword:'',
-            errors:{}
+            userPassword:''
         };
         this.loadUsers = this.loadUsers.bind(this);
         this.handleUserEmailAddressChange = this.handleUserEmailAddressChange.bind(this);
@@ -76,7 +75,7 @@ class SignUp extends React.Component{
                         </Typography>
                         
                         <Typography color={"textSecondary"}>
-                            { user.emailAddress }
+                            { user.email }
                         </Typography>
                     </CardContent>
                 </Card>
@@ -99,7 +98,6 @@ class SignUp extends React.Component{
                     onChange={this.handleUserNameChange}
                     variant = "outlined"
                     style={{ margin: '2rem', width: "40rem" }}
-                   
                     required
                 />
                 </div>

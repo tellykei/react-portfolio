@@ -2,10 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
-
 import{blue, purple} from "@material-ui/core/colors";
 import HomePage from './Pages/HomePage';
-import ResumePage from './Pages/ResumePage';
 import PortfolioPage from './Pages/PortfoliPage';
 import FeedbackPage from './Pages/FeedbackPage';
 import SignUp from './Pages/SignUp';
