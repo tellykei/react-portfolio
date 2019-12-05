@@ -53,10 +53,12 @@ class SignUp extends React.Component{
             const data = { name: username, email: userEmailAddress, password: userPassword };
 
               await Axios.post('/api/users', data);
+              alert(`sign in successful`);
 
         } catch (error) {
 
             console.error(error.message);
+            alert(`signup failed`);
         }
 
         await this.loadUsers();
@@ -64,23 +66,7 @@ class SignUp extends React.Component{
     render() {
         
         const { users, userName, userEmailAddress, userPassword } = this.state;
-        
-        const userCards = users.map((user) => {
-
-            return (
-                <Card style={{ margin: '1rem' }} key={JSON.stringify(user)}>
-                    <CardContent>
-                        <Typography color={"textSecondary"}>
-                            { user.name }
-                        </Typography>
-                        
-                        <Typography color={"textSecondary"}>
-                            { user.email }
-                        </Typography>
-                    </CardContent>
-                </Card>
-            )
-        });
+   
 
         return (
             <div className="container" style={{marginTop: '5rem', width : "100%"}}>
@@ -104,8 +90,9 @@ class SignUp extends React.Component{
                 <div>
                 <TextField
                     
-                    type= "email"
-                    label='Email Address'
+                    type= "Email"
+                    placeholder="Email Address"
+                    label={'Email Address'}
                     value={userEmailAddress}
                     onChange={this.handleUserEmailAddressChange}
                     style={{ margin: '2rem', width: "40rem" }}
@@ -135,7 +122,7 @@ class SignUp extends React.Component{
                     </Button>
                 </div>
                 </form>
-                {userCards}
+                
             </div>
         );
     }

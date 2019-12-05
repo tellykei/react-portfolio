@@ -3,8 +3,7 @@ import Axios from 'axios';
 
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+
 import Typography from '@material-ui/core/Typography';
 import WithAuth from './withAuth';
 class FeedbackPage extends React.Component {
@@ -23,12 +22,7 @@ class FeedbackPage extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     async componentDidMount(){
-   
-        
         await this.loadmessages();
-        
-      //  await this.loadmessageid();
-
     }
 
     async loadmessages() {
@@ -53,7 +47,7 @@ class FeedbackPage extends React.Component {
         this.setState({usermessage: event.target.value});
     }
 
-  async handleSubmit(e) {
+  async handleSubmit() {
         const { name, usermessage } = this.state;
         try {
 
@@ -71,45 +65,23 @@ class FeedbackPage extends React.Component {
 
 
     render(){
-        const { messagesarr, name, usermessage} = this.state;
-
-        // For each user in the database, create a card
-        const messagecard = messagesarr.map((message) => {
-
-            return (
-                <Card style={{ margin: '1rem' }} key={JSON.stringify(message)}>
-                    <CardContent>
-                        <Typography color={"textSecondary"}>
-                            { message.name }
-                        </Typography>
-                        
-                        <Typography color={"textSecondary"}>
-                            { message.messages }
-                        </Typography>
-                        
-                    </CardContent>
-                    <WithAuth />
-                </Card>
-            )
-        });
-
+        const { name, usermessage} = this.state;
         return (
             <div style={{ marginTop: '2rem' }} >
             <Typography component="h1" variant="h5" align='center'>
               Feedback
             </Typography >
                 <form align = 'center'>
-                <div>
+                <div className="form-group"> 
                 <TextField 
                     label={'Name'}
                     value={name}
                     variant="outlined"
                     onChange={this.handleUserNameChange}
-                    align= 'center'
                     style={{ margin: '1rem' ,width: '20rem',  }}
                 />
                 </div>
-                <div>
+                <div className="form-group"> 
                 <TextField 
                     label={'message'}
                     value={usermessage}
@@ -120,10 +92,11 @@ class FeedbackPage extends React.Component {
                     style={{ margin: '1rem', width: '25rem'}}
                 />
                 </div>
-                <div style={{ margin: '1rem' }}>
-                    <Button 
+                <div style={{ margin: '1rem' }}className="form-group">
+                    <Button type = 'submit'
                         onClick={this.handleSubmit} 
-                        variant={'contained'}>
+                        variant={'contained'}
+                        className="btn btn-primary">
 
                         Submit
                     </Button>
@@ -137,7 +110,7 @@ class FeedbackPage extends React.Component {
 
                     Messages
                 </Typography>
-                { messagecard }
+                <WithAuth/>
                 
             </div>
         );

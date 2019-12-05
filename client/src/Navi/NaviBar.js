@@ -11,31 +11,19 @@ import FolderSharedIcon from '@material-ui/icons/FolderShared';
 import PersonIcon from '@material-ui/icons/Person';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { Typography } from '@material-ui/core';
-var loggedin=false;
+let loggedin = false;
 class NaviBar extends React.Component {
     constructor(props){
  
         super(props);
+
         this.handleHomePageNavi = this.handleHomePageNavi.bind(this);
         this.handleProjectPageNavi = this.handleProjectPageNavi.bind(this);
         this.handleSignInPageNavi = this.handleSignInPageNavi.bind(this);
         this.handlefeedbackPageNavi = this.handlefeedbackPageNavi.bind(this);
         this.handleSignUpPageNavi=this.handleSignUpPageNavi.bind(this);
     }
-     componentDidMount(){
-        fetch('/api/sessions')
-            .then(response => {
-              if (response.status === 200) {
-                loggedin=true ;
-                
-              }
-              else{
-                  loggedin =false;
-              }
-            
-            });
-    
-        }
+ 
     handleHomePageNavi(){
         const {history} = this.props;
         history.push("/");
@@ -56,8 +44,22 @@ class NaviBar extends React.Component {
         const {history} = this.props;
         history.push("/signup");
     }
+    async componentDidMount(){
+        fetch('/api/sessions')
+            .then(response => {
+              if (response.status === 200) {
+                loggedin = true
+                
+              }
+              else{
+                loggedin = false
+              }
+            });
+    
+        }
 
     render(){
+       
         if(!loggedin){
             return(
                     <AppBar position = "static" >
@@ -86,10 +88,10 @@ class NaviBar extends React.Component {
                             showLabels
                             color = {'inherit'}
                             startIcon={< CommentIcon/>  }
-                            onClick= {this.handlefeedbackPageNavi}
-                            >
+                            onClick= {this.handlefeedbackPageNavi}>
                                 FeedBack
                             </Button>
+                           
                             <Button color = {"inherit"}
                             startIcon={<PersonIcon/>}
                             onClick = {this.handleSignInPageNavi}>
@@ -106,7 +108,7 @@ class NaviBar extends React.Component {
                 
             );
         }
-        else{
+        
             return(
             <AppBar position = "static" >
             <Toolbar >
@@ -130,7 +132,7 @@ class NaviBar extends React.Component {
                     Portfolio
                 
                 </Button>
-
+               
                 
                 <Button color = {"inherit"}
                 startIcon={<PersonIcon/>}
@@ -148,6 +150,6 @@ class NaviBar extends React.Component {
     
         );
         }
-        }
+        
 }
 export default withRouter(NaviBar);

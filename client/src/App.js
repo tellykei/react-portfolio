@@ -9,9 +9,6 @@ import FeedbackPage from './Pages/FeedbackPage';
 import SignUp from './Pages/SignUp';
 import NaviBar from './Navi/NaviBar';
 import SignInPage from './Pages/SignInPage';
-
-
-//import withAuth from './Pages/withAuth';
 const theme = createMuiTheme({
   palette:{
     primary:blue,
@@ -20,7 +17,7 @@ const theme = createMuiTheme({
 });
 
 class App extends React.Component {
-  
+
   render(){
     return (
       <div>
@@ -30,8 +27,8 @@ class App extends React.Component {
               {
                 <NaviBar/>
               }
+              
               <Switch>
-          
                 <Route path = "/signin">
                   <SignInPage/>
                 </Route>

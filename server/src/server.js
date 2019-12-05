@@ -5,12 +5,13 @@ const User = require('./model/users');
 const Messageuser = require('./model/messages');
 const path = require('path');
 
-var loggedin = false;
+
 const app = Express();
 const clientAppDirectory = path.join(__dirname, '../public', 'build');
 
-Mongoose.connect('mongodb://localhost/prousers',{useNewUrlParser:true});
+Mongoose.connect(process.env.MONGODB_URI ||'mongodb://localhost/trportfolio2');
 
+//mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/your-app-name');
 Mongoose.connection.once('open', ()=> console.log("Connected to database!"));
 
 
@@ -60,8 +61,7 @@ app.post('/api/users', async (request, response) => {
         await User.create({ name: name, email: email, password: hash});
 
         console.log(`A new user was created with name: '${name}' and email address: '${email}'`);
-
-        loggedin = true;
+        
         return response.status(200);
         
         
@@ -79,7 +79,7 @@ app.get('/api/messages',async (request, response) => {
 
     const messages = await Messageuser.find({});
 
-    return response.send(messages).status(100);
+    return response.send(messages).status(201);
 });
 
 
@@ -90,7 +90,7 @@ app.post('/api/messages', async (request, response)=>{
         await Messageuser.create({name:name, messages:messages});
         console.log("a new message was created " + messages);
         
-        return response.status(201).json({id: message._id});
+        return response.status(201);
     }
     catch(error){
         console.error("something went wrong while creating a message");
@@ -109,10 +109,7 @@ app.post('/api/sessions', async (request, response) => {
     if (!users) {
 
         console.log('No user was found with the email address: ' + email);
-        loggedin = false;
-        if (loggedin===false) {
-            response.status(401).send('Unauthorized: No token provided');
-        }
+       
         return response.status(400);
     }
 
@@ -124,10 +121,7 @@ app.post('/api/sessions', async (request, response) => {
         if (error) {
 
             console.error('There was an error checking the users password hash: ' + error.message);
-            loggedin = false;
-            if (loggedin==false) {
             response.status(401).send('Unauthorized');
-        }
             return response.setstatus(400);
         }
 
@@ -135,30 +129,32 @@ app.post('/api/sessions', async (request, response) => {
         if (result === true) {
 
             console.log('User successfully logged in!');
-            loggedin=true;
+            
             return response.status(200).send("200");
         }
 
         console.log('User failed login, incorrect password');
+            
+            response.status(401).send('failed with 400');
         
-            response.status(401).send('Unauthorized');
-        // Dont tell the user why the login failed, it just failed with a 400 ‾\_(ツ)_/‾
         return response.status(400);
     });
 });
 app.get('/api/messages/:id', async (request,response)=>{
-    const _id = request.params.id;
-    Messageuser.findOne({_id});
-    return response.send("heres the id");
+    await Messageuser.findOne({_id:request.params.id});
+    return response.status(201).json({data:messages});
 });
-app.delete('/api/messages/:id', async (request,response)=>{
-    const _id = request.params.id;
-    Messageuser.findOneAndDelete({_id});
-    return response.send("nan").status(200);
-});
-/*app.get('/checkToken', withAuth, function(req, res) {
-    res.sendstatus(200);
-  });*/
+
+app.delete('/api/messages/:id', (req, res, next) => {
+    Messageuser.deleteOne({ _id: req.params.id }, (err, result) => {
+      if(err){
+        throw err;
+      }
+        res.send(result);
+    });
+  });
+
+
 app.get('/*', (request, response) => {
     const indexPath = path.join(clientAppDirectory, 'index.html');
 
@@ -166,6 +162,6 @@ app.get('/*', (request, response) => {
 });
 
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8000;
 
 app.listen(port, () => console.log('Server is up!'));

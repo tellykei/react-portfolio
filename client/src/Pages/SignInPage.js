@@ -40,7 +40,7 @@ class SignInPage extends React.Component {
         this.setState({userPassword: event.target.value});
     }
 
-  async handleSubmit(e) {
+  async handleSubmit() {
         const { userEmailAddress, userPassword } = this.state;
         try {
 
