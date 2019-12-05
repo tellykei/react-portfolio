@@ -1,43 +1,59 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import Axios from 'axios';
 
-export default function withAuth(ComponentToProtect) {
-  return class extends Component {
-    constructor() {
-      super();
+class WithAuth extends React.Component {
+  
+    constructor(props) {
+      super(props);
       this.state = {
         loading: true,
-        redirect: false,
+        
+        idarray:[]
       };
+      this.loaduserid = this.loaduserid.bind(this);
+      this.handleDelete=this.handleDelete.bind(this);
     }
 
-    componentDidMount() {
-      fetch('/api/session')
-        .then(response => {
-          if (response.status === 200) {
-            this.setState({ loading: false });
-          } else {
-            const error = new Error(response.error);
-            throw error;
-          }
-        })
-        .catch(err => {
-          console.error(err);
-          this.setState({ loading: false, redirect: true });
-        });
+    async componentDidMount() {
+      await this.loaduserid()
     }
+    async loaduserid() {
+      try {
+          const response = await Axios.get('/api/messages/:id');
+          const { data } = response;
+          this.setState({ idarray: data });
 
+      } catch (error) {
 
+          console.error(error.message);
+      }
+  }
+    async handleDelete(e){
+      const{id} =this.state;
+      try{
+          const data= {_id: id};
+          await Axios.delete('/api/messages/:id',data);
+
+      }
+      catch(error){
+          console.error(error.message);
+      }
+      await this.loaduserid();
+  }
+  
     render() {
-      const { loading, redirect } = this.state;
-      if (loading) {
-        return null;
-      }
-      if (redirect) {
-        return <Redirect to="/signup" />;
-      }
-      return <ComponentToProtect {...this.props} />;
+      return <div> 
+        <Button 
+        onClick={this.handleDelete} 
+        variant={'contained'}
+        style = {{color:'red'}}>
+        Delete
+        </Button>
+        </div>
+      
+
+      
     }
   }
-}
-{/* componet = {withAuth(FeedbackPage)}>*/}
+export default WithAuth;

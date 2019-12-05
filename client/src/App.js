@@ -9,7 +9,7 @@ import FeedbackPage from './Pages/FeedbackPage';
 import SignUp from './Pages/SignUp';
 import NaviBar from './Navi/NaviBar';
 import SignInPage from './Pages/SignInPage';
-import withAuth from './Pages/withAuth';
+
 
 //import withAuth from './Pages/withAuth';
 const theme = createMuiTheme({
@@ -20,6 +20,7 @@ const theme = createMuiTheme({
 });
 
 class App extends React.Component {
+  
   render(){
     return (
       <div>
@@ -31,10 +32,6 @@ class App extends React.Component {
               }
               <Switch>
           
-                
-                <Route path= "/projects">
-                  <PortfolioPage/>
-                </Route>
                 <Route path = "/signin">
                   <SignInPage/>
                 </Route>
@@ -43,6 +40,9 @@ class App extends React.Component {
                 </Route>
                 <Route path = "/feedback"> 
                 <FeedbackPage/>
+                </Route>
+                <Route path= "/portfolio">
+                  <PortfolioPage/>
                 </Route>
                 <Route path = "/">
                   <HomePage/>

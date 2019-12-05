@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import WithAuth from './withAuth';
 class FeedbackPage extends React.Component {
     constructor() {
         super();
@@ -13,7 +14,8 @@ class FeedbackPage extends React.Component {
             messagesarr: [],
             name: '',
             usermessage:'',
-            loggedin: false
+            loggedin: false,
+           
         }
         this.loadmessages = this.loadmessages.bind(this);
         this.handleUserMessageChange = this.handleUserMessageChange.bind(this);
@@ -21,29 +23,28 @@ class FeedbackPage extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     async componentDidMount(){
+   
         
-        fetch('/api/sessions')
-        .then(response => {
-          if (response.status == 200) {
-            this.setState({ loggedin: true });
-            
-        }
+        await this.loadmessages();
         
-        });
-        await this.loadmessages()
+      //  await this.loadmessageid();
+
     }
 
     async loadmessages() {
+        
         try {
             const response = await Axios.get('/api/messages');
+           
+            
             const { data } = response;
             this.setState({ messagesarr: data });
-
         } catch (error) {
 
             console.error(error.message);
         }
     }
+    
 
     handleUserNameChange(event){
         this.setState({name:event.target.value});
@@ -68,9 +69,9 @@ class FeedbackPage extends React.Component {
         await this.loadmessages();
     }
 
+
     render(){
-        
-        const { messagesarr, name, usermessage, loggedin} = this.state;
+        const { messagesarr, name, usermessage} = this.state;
 
         // For each user in the database, create a card
         const messagecard = messagesarr.map((message) => {
@@ -85,11 +86,13 @@ class FeedbackPage extends React.Component {
                         <Typography color={"textSecondary"}>
                             { message.messages }
                         </Typography>
+                        
                     </CardContent>
+                    <WithAuth />
                 </Card>
             )
         });
-        if(loggedin ==true){
+
         return (
             <div style={{ marginTop: '2rem' }} >
             <Typography component="h1" variant="h5" align='center'>
@@ -119,7 +122,7 @@ class FeedbackPage extends React.Component {
                 </div>
                 <div style={{ margin: '1rem' }}>
                     <Button 
-                        onClick={this.handleUserSubmit} 
+                        onClick={this.handleSubmit} 
                         variant={'contained'}>
 
                         Submit
@@ -135,16 +138,10 @@ class FeedbackPage extends React.Component {
                     Messages
                 </Typography>
                 { messagecard }
+                
             </div>
         );
-        }
-    else{
-        return(
-            <div>
-                not logged in
-            </div>
-        );
-    }
+        
     }
 }
 export default FeedbackPage;
